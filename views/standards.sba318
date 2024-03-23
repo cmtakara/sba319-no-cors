@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#title#</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>#title#</h1>
+      <div>#content#</div>
+            <a href="/api/standards">See the list of standards as json</a> <br> 
+            <a href="/">Back to Index</a>
+            <h2>choose which subject</h2>
+            <a href="/standards/math"> Only <strong> math </strong> standards </a> <br>
+            <a href="/standards/english"> Only <strong> english  </strong> standards </a> <br>
+            <a href="/standards/science"> Only <strong> science  </strong>standards </a> <br>
+            <a href="/standards/socStud"> Only <strong> social studies </strong> standards </a> <br>
+
+    </div>
+    <div>
+        <h2>Lists standards</h2>
+        <ul>#standardsList#</ul>
+    </div>
+  </body>
+</html>

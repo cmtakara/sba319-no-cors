@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#title#</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>#title#</h1>
+      <div>#content#</div>
+                  <a href="/api/lessons">See the list of lessons as json</a> <br> 
+            <a href="/">Back to Index</a>
+    </div>
+    <div>
+        <h2>New Lesson Form</h2>
+        <p>To Be Added Later </p>
+
+        <h2>Search by subject</h2>
+        <a href="/api/lessons?subject=math">math</a><br>
+        <a href="/api/lessons?subject=english">english</a><br>
+        <a href="/api/lessons?subject=socStud">social studies</a><br>
+        <a href="/api/lessons?subject=science">science</a><br>
+    </div>
+  </body>
+</html>

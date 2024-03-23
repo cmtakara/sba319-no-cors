@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#title#</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>#title#</h1>
+      <div>#content#</div>
+        <a href="./users">Users</a><br>
+        <a href="./lessons">Lessons</a><br>
+        <a href="./standards">Standards</a>
+    </div>
+  </body>
+</html>

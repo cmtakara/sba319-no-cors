@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#title#</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>#title#</h1>
+      <div>#content#</div>
+      <a href="/">Back to Index</a> <br>
+      <a href="/api/users">See a list of users</a> <br>     
+      <a href="/api/users/list">choose a user to modify</a>
+    </div>
+    <div>
+        <h2>New User Form</h2>
+           <form action="api/users" method="POST" id="submit-form">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname"><br>
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname"><br>
+
+        <label for="uname">User name (email address for students):</label>
+        <input type="text" id="uname" name="uname"><br>
+
+        <label for="role">Role:</label>
+        <select name="role" id="role">
+            <option value="student">student</option>
+            <option value="teacher">teacher</option>
+            <option value="guest">guest</option>
+        </select>
+        <br>
+        <label for="pword">Password:</label>
+        <input type="password" id="pword" name="pword"><br>
+        <label for="pword2">Confirm Password:</label>
+        <input type="password" id="pword2" name="pword2"><br>
+        <input type="submit" value="Register">
+      </form> 
+    </div>
+  </body>
+</html>

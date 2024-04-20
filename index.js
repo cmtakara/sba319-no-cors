@@ -5,6 +5,8 @@ const fs = require('fs');
 const methodOverride = require('method-override');
 const axios = require("axios");
 
+const BASE_URL = 'http://localhost:5050/'
+
 // controllers/routes
 const users = require('./routes/users');
 const standards = require('./routes/standards');
@@ -115,7 +117,7 @@ app.use("/api/standards", standards);
     // this won't work because this is the backend and not the webinterface
     // const response = await fetch('/api/standards');
     try {
-        const response = await axios.get('http://localhost:3000/api/standards');
+        const response = await axios.get(BASE_URL+'api/standards');
         return response.data;
     } catch (err) {
         console.error(err);
@@ -124,7 +126,7 @@ app.use("/api/standards", standards);
 
   app.get("/standards", async (req, res) => {
     const standards = await getStandards();
-    // if (standards) console.log(standards);
+    if (standards) console.log(standards);
 
     let standardList = ""
     standards.forEach(standard => {

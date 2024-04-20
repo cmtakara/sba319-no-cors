@@ -1,12 +1,12 @@
 express = require("express");
 const router = express.Router();
+const db = require('../db/conn');
+const Standard = require('../models/Standard');
 
-const standards = require('../data/standards');
 
-router
-    .route("/")
-    .get((req, res) => {
-        res.json(standards);
+router.get("/", async (req, res) => {
+    const foundStandards = await Standard.find(({}));
+        res.status(200).json(foundStandards);
     })
 
 

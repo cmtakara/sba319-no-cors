@@ -1,19 +1,29 @@
 express = require("express");
 const router = express.Router();
+const db = require('../db/conn');
+const Lesson = require('../models/Lesson');
 
-const lessons = require('../data/lesson');
 
-router
-    .route("/")
-    .get((req, res) => {
+router.get(('/'), async (req, res) => {
+    console.log(`request query is: ${req.query.subject}`);
+
+    try {
+        // const foundLessons = await Lesson.find({});
+        // res.status(200).json(foundLessons);
         if (req.query.subject) {
+            const foundLessons = await Lesson.find({ subject: req.query.subject })
             console.log(req.query.subject);
-            console.log(lessons)
-            const subjLessons = lessons.filter((lesson) => lesson.subject == req.query.subject);
-            res.json(subjLessons)
+            console.log(foundLessons)
+            res.status(200).json(foundLessons);
+        } else {
+            const foundLessons = await Lesson.find({});
+            res.status(200).json(foundLessons);
         }
-        res.json(lessons);
-    })
+        // res.status(200).json(foundLessons);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
 
 
 //THIS WILL ONLY BE USEFUL IF WE ADD IN GET BY ID, or something like that

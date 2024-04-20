@@ -1,83 +1,30 @@
 const express = require("express");
 const router = express.Router();
+const db = require('../db/conn');
+const User = require('../models/User');
 
-const users = require("../data/user");
+router.get('/', async (req, res) => {
+    try {
+        const foundUsers = await User.find({});
+        res.status(200).json(foundUsers);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
 
-router
-    .route("/")
-    .get((req, res) => {
-        res.json(users);
-    }).post((req, res) => {
-        if (req.body.fname && req.body.lname && req.body.uname && req.body.role) {
-            if (users.find((u) => u.uname == req.body.uname)) {
-                res.json({ error: "Username Already Taken" });
-                return;
-            }
-
-            const user = {
-                id: parseInt(users[users.length - 1].id) + 1,
-                fname: req.body.fname,
-                lname: req.body.lname,
-                uname: req.body.uname,
-                role: req.body.role,
-            };
-
-            users.push(user);
-            res.json(users[users.length - 1]);
-        } else res.json({ error: "Insufficient Data" });
-    })
-    .patch((req, res, next) => {
-        // with the PATCH request route, we allow the client to make changes to an 
-        // existing user in the database
-        // PATCH only replaces or updates part of a user
-        // PUT also can be used but that updates the entire user
-        // console.log('/api/users')
-        console.log(`updating user with id: ${req.body.id}`)
-        // console.log(req.body);
-        // `/users/${u.id}/${u.fname}/${u.lname}/${u.uname}/${u.role}`
-        // console.log('need to add functionality to actually modify');
-        const user = users.find((u, i) => {
-            if (u.id == req.body.id) {
-                for (const key in req.body) {
-                    users[i][key] = req.body[key];
-                }
-                return true;
-            }
-        });
-        if (user) res.json(user);
-        else next();
-        // res.redirect('/users');
-    })
-    .delete((req, res, next) => {
-        // console.log(req.body);
-        //    console.log(`deleting user with id: ${req.body.id}`);
-        //    console.log('need to add functionality to actually modify');
-        // the DELETE request route removes the indicated resources
-        const user = users.find((u, i) => {
-            if (u.id == req.body.id) {
-                users.splice(i, 1);
-                return true;
-            }
-        });
-        if (user) res.json(user);
-        else next();
-        //    res.redirect('/users');
-    });
-
-
-
-router
-    .route('/list')
-    .get((req, res, next) => {
-        // create a response string with a tags where the text is the string below and 
-        // the link goes to an individual user form to modify in views
-        // with the url as the user information as parameters
-        let userText = '';
-        let userHref = '';
-        let aTag = ''
-        let finalHTML = '<h1>users</h1>'
-
-        users.forEach((u) => {
+// this is only in here to keep consistency between sba318 and sba319
+//  in the future, we will use the front end to display the list of all users to modify
+router.get('/list', async (req, res, next) => {
+    // create a response string with a tags where the text is the string below and 
+    // the link goes to an individual user form to modify in views
+    // with the url as the user information as parameters
+    let userText = '';
+    let userHref = '';
+    let aTag = '';
+    let finalHTML = '<h1>users</h1>';
+    try {
+        const foundUsers = await User.find({});
+        foundUsers.forEach((u) => {
             console.log(u)
             if (Object.keys(u).length !== 0) {
                 userText = `User with id: ${u.id} and name: ${u.fname} ${u.lname} with username: ${u.uname} and role of ${u.role}`;
@@ -89,15 +36,66 @@ router
         })
         // console.log(users)
         res.send(finalHTML);
-    })
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
 
-router
-    .route("/:id")
-    .get((req, res, next) => {
-        const user = users.find((u) => u.id == req.params.id);
+router.get(':/id', async (req, res, next) => {
+    try {
+        const foundUser = User.findById(req.params.id);
         if (user) res.json(user);
         else next();
-    })
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
+router.delete('/', async (req, res) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.body.id);
+        console.log(deletedUser);
+        res.status(200).redirect('/api/users');
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
+
+
+router.post("/", async (req, res) => {
+    if (req.body.fname && req.body.lname && req.body.uname && req.body.role) {
+        try {
+            const foundUser = await User.find({uname: req.body.uname});
+            if (foundUser.length) {
+                console.log(foundUser)
+                res.status(400).json({ error: "Username Already Taken" });
+                return;
+            }
+            const createdUser = await User.create(req.body);
+            console.log(createdUser);
+            res.status(201).redirect('/users');
+        } catch (err) {
+            console.log('in catch')
+            res.status(400).send(err);
+        }
+    } 
+    else res.status(400).json({ error: "Insufficient Data" });
+})
+
+router.patch('/', async (req, res, next) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.body.id,
+            req.body,
+            { new: true}
+        );
+        res.status(200).redirect('/api/users');
+    }catch (err) {
+            res.status(400).send(err);
+        }
+
+})
 
 // Custom 404 (not found) middleware.
 // Since we place this last, it will only process

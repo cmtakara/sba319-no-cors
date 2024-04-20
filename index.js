@@ -1,12 +1,18 @@
 const express = require('express');
-const app = express();
-const PORT = 3000;
+// const PORT = 3000;
+const dotenv = require('dotenv');
 const fs = require('fs');
+const methodOverride = require('method-override');
+const axios = require("axios");
+
+// controllers/routes
 const users = require('./routes/users');
 const standards = require('./routes/standards');
 const lessons = require('./routes/lessons');
-const methodOverride = require('method-override');
-const axios = require("axios");
+
+const app = express();
+dotenv.config();
+const PORT = process.env.PORT || 5050;
 
 app.use(express.static("./styles"));
 app.use(methodOverride('_method'));
@@ -53,12 +59,14 @@ app.engine("sba318", (filePath, options, callback) => {
   app.set("view engine", "sba318"); 
 
   // =============== ROUTES ===============
-// Use our Routes
+// Use our controllers/routes files for api interactions
 app.use("/api/users", users);
 app.use("/api/lessons", lessons);
 app.use("/api/standards", standards);
 
 
+// The routes below are for user views for this particular application.
+//  In the next iteration, there will be a frontend that will handle the views and we will only use the api routes.
   app.get("/", (req, res) => {
     const options = {
         title: "Beginning Backend for HSE Class",

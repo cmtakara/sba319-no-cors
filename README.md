@@ -1,8 +1,7 @@
 # sba318sample
 
 ## About
-This site takes the initial HTML and CSS only page and adds some JavaScript functionality.  There is specific functionality required in the project.  Those requirements are noted in comments.\
-There are specific project guidelines for the original HTML and CSS only site, which are indicated in the comments of the index.html.\
+This is the framework for the backend.  This application builds on SBA318, but uses actual database operations in order to create an API that we can use in the future.
 The commented code is left in so that learners can see potential points of troubleshooting, including places where they may want to see what is being held in their variables.
 
 ## Deployed Links

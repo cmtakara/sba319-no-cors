@@ -12,4 +12,4 @@ This builds the new assignment requirements on top of the previous assignments. 
 
 [SBA 316 on github pages](https://cmtakara.github.io/sba316sample/index.html)
 
-[SBA 307 on github pages](https://cmtakara.github.io/sba307sample/)
+[SBA 307 on github pages](https://cmtakara.github.io/sba307sample/)# sba319-no-cors
